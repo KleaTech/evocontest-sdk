@@ -1,6 +1,7 @@
 ﻿using evocontest.Common;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -14,12 +15,20 @@ namespace evocontest.Submission.Sample
         public string Solve(string input)
         {
             var acronyms = GetPossibleAcronyms(input);
-
-            // Remove conflicting phrases, e.g.: "aa bb" <> "ax bx"
+#if DB
+            Debug.WriteLine(string.Join('\n', acronyms.Select(kv => kv.Key + " : " + string.Join(", ", kv.Value))));
+            Debug.WriteLine("After removing conflicting: "); 
+#endif
             acronyms.Where(x => AreConflicting(x.Value)).ToList().ForEach(x => acronyms.Remove(x.Key));
-
+#if DB
+            Debug.WriteLine(string.Join('\n', acronyms.Select(kv => kv.Key + " : " + string.Join(", ", kv.Value)))); 
+            Debug.WriteLine("After removing singles: ");
+#endif
             // Remove expressions with only 1 occurrence
             acronyms.Where(kvp => kvp.Value.Count < 2).ToList().ForEach(x => acronyms.Remove(x.Key));
+#if DB
+            Debug.WriteLine(string.Join('\n', acronyms.Select(kv => kv.Key + " : " + string.Join(", ", kv.Value)))); 
+#endif
 
             // Replace expressions with acronyms
             var result = input;
@@ -92,12 +101,13 @@ namespace evocontest.Submission.Sample
                         var (firstWord, secondWord) = (firstPhrase[k], secondPhrase[k]);
                         if (!IsAcronym(firstWord) && !IsAcronym(secondWord) && firstWord != secondWord)
                         {
+                            Debug.WriteLine(string.Join(", ", phrases) + " true");
                             return true;
                         }
                     }
                 }
             }
-
+            Debug.WriteLine(string.Join(", ", phrases) + " false");
             return false;
         }
 

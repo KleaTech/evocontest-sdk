@@ -21,6 +21,7 @@ namespace evocontest.Submission.Runner
             Console.WriteLine($"--- {SubmissionType.FullName} ---");
             var submissionRunner = new SubmissionRunner(SubmissionType) { Seed = Seed };
             submissionRunner.Run();
+            Console.ReadKey();
         }
     }
 }

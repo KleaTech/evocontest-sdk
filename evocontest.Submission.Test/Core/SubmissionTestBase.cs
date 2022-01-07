@@ -22,6 +22,14 @@ namespace evocontest.Submission.Test.Core
     public abstract class SubmissionTestBase : TestBase
     {
         [Test]
+        public void RealInput1()
+        {
+            const string input = "sfmxsduck hualubideq. fnuanyr rjlqqqlq iqjszbbd ffemwqq ndhytg sfmxsduck hualubideq ddbocyavt sfmxsduck hualubideq zewlke rjlqqplq iqjszbzd ffemvqq ssnvbzq. twnknk ktirugo whnawlzfpf lgywqsjgf TK whnawlzfpf jykqhf ukuaquywum fptmamq bantvoczx rjlqqplr iqkszbzd ffenvqq aswbdlw UF.";
+            const string expected = "SH. fnuanyr rjlqqqlq iqjszbbd ffemwqq ndhytg SH ddbocyavt SH zewlke rjlqqplq iqjszbzd ffemvqq ssnvbzq. TKW lgywqsjgf TKW jykqhf UF bantvoczx rjlqqplr iqkszbzd ffenvqq aswbdlw UF.";
+            AssertSolve(input, expected);
+        }
+
+        [Test]
         public void Solve_EmptyInput_EmptyOutput()
         {
             AssertSolve(string.Empty, string.Empty);
